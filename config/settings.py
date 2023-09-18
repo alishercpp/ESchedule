@@ -19,7 +19,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     # local apps
-    'display.apps.DisplayConfig',
+    'app.apps.AppConfig',
 ]
 
 MIDDLEWARE = [

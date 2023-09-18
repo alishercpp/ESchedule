@@ -1,5 +1,5 @@
 from django import template
-from display.models import Pupil
+from app.models import Pupil
 
 register = template.Library()
 
