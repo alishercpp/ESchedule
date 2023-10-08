@@ -3,23 +3,27 @@ from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
-SECRET_KEY = 'django-insecure-6938edwfk8s3d5swq%wp!cjx3oe48&uc6y#4o%s(37bgvigm^r'
+SECRET_KEY = 'django-insecure-mt#1hnf4mc1kl&=nfe6uqpi40=4e7!%m!v_98o=*%brq@ww5tr'
 
 DEBUG = True
 
 ALLOWED_HOSTS = []
 
 
+
 INSTALLED_APPS = [
+    'jazzmin',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
-    # local apps
-    'app.apps.AppConfig',
+    'rest_framework',
+    'rest_framework.authtoken',
+    'corsheaders',
+    'schools.apps.SchoolsConfig',
+    'teachers.apps.TeachersConfig',
 ]
 
 MIDDLEWARE = [
@@ -32,14 +36,24 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+AUTH_USER_MODEL = 'teachers.Teacher'
 ROOT_URLCONF = 'config.urls'
+
+REST_FRAMEWORK = {
+    'DEFAULT_RENDERER_CLASSES': (
+        'rest_framework.renderers.JSONRenderer',
+    ),
+    "DEFAULT_AUTHENTICATION_CLASSES": [
+        "rest_framework.authentication.TokenAuthentication",
+    ]
+}
+
+CORS_ALLOW_ALL_ORIGINS = True
 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [
-            BASE_DIR.joinpath('templates')
-        ],
+        'DIRS': [],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -55,13 +69,13 @@ TEMPLATES = [
 WSGI_APPLICATION = 'config.wsgi.application'
 
 
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
 
 
 AUTH_PASSWORD_VALIDATORS = [
@@ -80,7 +94,6 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
-
 LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = 'UTC'
@@ -89,9 +102,11 @@ USE_I18N = True
 
 USE_TZ = True
 
-
-
+import os
 STATIC_URL = 'static/'
-
+STATICFILES_DIRS = [
+    os.path.join("/static/")
+]
+STATIC_ROOT = "static"
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
